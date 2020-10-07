@@ -19,11 +19,11 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 export default {
   methods: {
     async login() {
-      const res = await axios.post('login', {
+      const res = await this.$axios.post('/login', {
         username: this.username,
         password: this.password
       })
