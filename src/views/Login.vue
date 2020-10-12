@@ -21,6 +21,15 @@
 <script>
 // import axios from 'axios'
 export default {
+  created() {
+    const {
+      username,
+      password
+    } = this.$route.params
+    this.username = username
+    this.password = password
+  },
+
   methods: {
     async login() {
       const res = await this.$axios.post('/login', {
@@ -29,10 +38,13 @@ export default {
       })
       const {
         statusCode,
-        message
+        message,
+        data
       } = res.data
       if (statusCode === 200) {
         this.$toast.success(message)
+        localStorage.setItem('token', data.token)
+        localStorage.setItem('userId', data.user.id)
         this.$router.push('/user')
       } else {
         this.$toast.fail('登录失败')

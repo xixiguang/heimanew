@@ -3,7 +3,7 @@
   <hm-header>注册</hm-header>
   <hm-logo></hm-logo>
   <van-form @submit="register">
-    <van-field v-model="user.username" label="账号" placeholder="请输入你的账号" :rules="rules.username" />
+    <van-field v-model="user.username" label="用户名" placeholder="请输入你的用户名" :rules="rules.username" />
     <van-field v-model="user.nickname" label="昵称" placeholder="请输入你的昵称" :rules="rules.nickname" />
     <van-field v-model="user.password" type="password" label="密码" placeholder="请输入密码" :rules="rules.password" />
     <div style="margin: 16px;">
@@ -67,13 +67,17 @@ export default {
   methods: {
     async register() {
       const res = await this.$axios.post('/register', this.user)
+      console.log(res)
       const {
         statusCode,
         message
       } = res.data
       if (statusCode === 200) {
         this.$toast.success(message)
-        this.$router.push('/login')
+        this.$router.push({
+          name: 'login',
+          params: this.user
+        })
       } else {
         this.$toast.fail(message)
       }
